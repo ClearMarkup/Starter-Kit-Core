@@ -12,6 +12,12 @@
             "email": "support@clearmarkup.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "ClearMarkup\\Classes\\Extends\\": "extends/",
+            "ClearMarkup\\Validation\\ExtendsRules\\" : "validatorRules/"
+        }
+    },
     "require": {
         "php": ">=8.2",
         "altorouter/altorouter": "^2.0",
