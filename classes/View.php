@@ -165,12 +165,8 @@ class View extends Core
         $twig->addGlobal('headCsrf', new \Twig\Markup(Tools::headCsrf(), 'UTF-8'));
 
         /* gettext lang */
-        $twig->addFilter(new \Twig\TwigFilter('t', function ($string, $context = null) {
-            if ($context) {
-                return pgettext($context, $string);
-            } else {
-                return gettext($string);
-            }
+        $twig->addFilter(new \Twig\TwigFilter('t', function ($string) {
+            return gettext($string);
         }));
 
         echo $twig->render($view . '.twig', (array) $this->data);
