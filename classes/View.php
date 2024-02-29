@@ -140,9 +140,10 @@ class View extends Core
      */
     public function render($view, $status = 200)
     {
+        global $config;
         extract($this->data);
 
-        require(__DIR__ . '/../views/' . $view . '.view.php');
+        require($config->root . '../views/' . $view . '.view.php');
         http_response_code($status);
         exit;
     }
@@ -156,7 +157,8 @@ class View extends Core
      */
     public function twig($view, $status = 200)
     {
-        $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../views');
+        global $config;
+        $loader = new \Twig\Loader\FilesystemLoader($config->root . '../views');
         $twig = new \Twig\Environment($loader);
 
         $twig->addGlobal('csrf', new \Twig\Markup(Tools::csrf(), 'UTF-8'));

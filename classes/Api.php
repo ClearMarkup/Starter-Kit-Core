@@ -25,7 +25,7 @@ class Api extends Core
         parent::__construct();
         $this->validator = new Validator;
 
-        $validation_files = glob(__DIR__ . '/../controller/validatorRules/*');
+        $validation_files = glob(__DIR__ . '/validatorRules/*');
         foreach ($validation_files as $file) {
             $validatorName = basename($file, '.php');
             $validatorClass = 'ClearMarkup\Validation\\ExtendsRules\\' . $validatorName;
