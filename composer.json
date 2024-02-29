@@ -1,0 +1,24 @@
+{
+    "name" : "clearmarkup/core",
+    "license": "MIT",
+    "type": "project",
+    "description": "ClearMarkup Starter Kit Core Package",
+    "keywords": ["clearmarkup", "starterkit", "core"],
+    "homepage": "https://clearmarkup.com",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "ClearMarkup",
+            "email": "support@clearmarkup.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.2",
+        "altorouter/altorouter": "^2.0",
+        "catfan/medoo": "^2.1",
+        "delight-im/auth": "^8.3",
+        "rakit/validation": "^1.4",
+        "phpmailer/phpmailer": "^6.9",
+        "twig/twig": "^3.8"
+    }
+}
