@@ -147,30 +147,4 @@ class View extends Core
         http_response_code($status);
         exit;
     }
-
-    /**
-     * Renders a Twig template with the assigned data.
-     *
-     * @param string $view The name of the Twig template to render.
-     * @param int $status The HTTP status code to set.
-     * @return void
-     */
-    public function twig($view, $status = 200)
-    {
-        global $config;
-        $loader = new \Twig\Loader\FilesystemLoader($config->root . 'views');
-        $twig = new \Twig\Environment($loader);
-
-        $twig->addGlobal('csrf', new \Twig\Markup(Tools::csrf(), 'UTF-8'));
-        $twig->addGlobal('headCsrf', new \Twig\Markup(Tools::headCsrf(), 'UTF-8'));
-
-        /* gettext lang */
-        $twig->addFilter(new \Twig\TwigFilter('t', function ($string) {
-            return gettext($string);
-        }));
-
-        echo $twig->render($view . '.twig', (array) $this->data);
-        http_response_code($status);
-        exit;
-    }
 }
