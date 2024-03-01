@@ -38,7 +38,7 @@ class Core
             'password' => $_ENV['DB_PASSWORD'] ?? null,
             'charset' => $_ENV['DB_CHARSET'] ?? null
         ]);
-        self::$authInstance = new Auth(self::$dbInstance->pdo, null, null, $_ENV['debug'] ? false : true);
+        self::$authInstance = new Auth(self::$dbInstance->pdo, null, null, $_ENV['DEBUG'] ? false : true);
     }
 
     public static function getProjectRoot()
