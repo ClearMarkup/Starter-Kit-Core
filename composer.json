@@ -15,7 +15,6 @@
     "autoload": {
         "psr-4": {
             "ClearMarkup\\Classes\\": "classes/",
-            "ClearMarkup\\Classes\\Extends\\": "extends/",
             "ClearMarkup\\Validation\\ExtendsRules\\" : "validatorRules/"
         }
     },

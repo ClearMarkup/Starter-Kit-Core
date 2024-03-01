@@ -1,5 +1,7 @@
 <?php
 
+namespace ClearMarkup\Classes;
+
 use ClearMarkup\Classes\Core;
 use ClearMarkup\Classes\View;
 
@@ -19,10 +21,6 @@ class App extends Core
             // Pre-flight request. Exit successfully.
             exit(0);
         }
-
-        // Set custom session name
-        session_name($_ENV['SESSION_NAME']);
-        session_start();
 
         // Show errors if debug is true
         if ($_ENV['DEBUG']) {
