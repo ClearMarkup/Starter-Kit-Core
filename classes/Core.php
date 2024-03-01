@@ -31,12 +31,12 @@ class Core
         $dotenv->load();
 
         self::$dbInstance = new Medoo([
-            'database_type' => $_ENV['DB_TYPE'],
-            'database_name' => $_ENV['DB_NAME'],
-            'server' => $_ENV['DB_SERVER'],
-            'username' => $_ENV['DB_USERNAME'],
-            'password' => $_ENV['DB_PASSWORD'],
-            'charset' => $_ENV['DB_CHARSET']
+            'database_type' => $_ENV['DB_TYPE'] ?? null,
+            'database_name' => $_ENV['DB_NAME'] ?? null,
+            'server' => $_ENV['DB_SERVER'] ?? null,
+            'username' => $_ENV['DB_USERNAME'] ?? null,
+            'password' => $_ENV['DB_PASSWORD'] ?? null,
+            'charset' => $_ENV['DB_CHARSET'] ?? null
         ]);
         self::$authInstance = new Auth(self::$dbInstance->pdo, null, null, $_ENV['debug'] ? false : true);
     }
@@ -58,12 +58,12 @@ class Core
     {
         if (self::$dbInstance === null) {
             self::$dbInstance = new Medoo([
-                'database_type' => $_ENV['DB_TYPE'],
-                'database_name' => $_ENV['DB_NAME'],
-                'server' => $_ENV['DB_SERVER'],
-                'username' => $_ENV['DB_USERNAME'],
-                'password' => $_ENV['DB_PASSWORD'],
-                'charset' => $_ENV['DB_CHARSET']
+                'database_type' => $_ENV['DB_TYPE'] ?? null,
+                'database_name' => $_ENV['DB_NAME'] ?? null,
+                'server' => $_ENV['DB_SERVER'] ?? null,
+                'username' => $_ENV['DB_USERNAME'] ?? null,
+                'password' => $_ENV['DB_PASSWORD'] ?? null,
+                'charset' => $_ENV['DB_CHARSET'] ?? null
             ]);
         }
         return self::$dbInstance;
