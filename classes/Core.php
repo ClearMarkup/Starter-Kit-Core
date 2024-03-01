@@ -4,7 +4,6 @@ namespace ClearMarkup\Classes;
 
 use Medoo\Medoo;
 use Delight\Auth\Auth;
-use Dotenv\Dotenv;
 
 /**
  * Class Core
@@ -27,13 +26,6 @@ class Core
      */
     public function __construct()
     {
-        $dotenv = Dotenv::createImmutable(self::getProjectRoot());
-        $dotenv->load();
-
-        // Set custom session name
-        session_name($_ENV['SESSION_NAME']);
-        session_start();
-
         self::$dbInstance = new Medoo([
             'type' => $_ENV['DB_TYPE'] ?? null,
             'database' => $_ENV['DB_NAME'] ?? null,

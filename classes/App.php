@@ -5,6 +5,8 @@ namespace ClearMarkup\Classes;
 use ClearMarkup\Classes\Core;
 use ClearMarkup\Classes\View;
 use AltoRouter;
+use Dotenv\Dotenv;
+
 
 class App extends Core
 {
@@ -15,6 +17,12 @@ class App extends Core
      */
     public function __construct()
     {
+        $dotenv = Dotenv::createImmutable(self::getProjectRoot());
+        $dotenv->load();
+
+        session_name($_ENV['SESSION_NAME']);
+        session_start();
+
         parent::__construct();
 
         // CORS
