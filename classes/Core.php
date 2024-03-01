@@ -149,4 +149,14 @@ class Core
             return false;
         }
     }
+
+    static function applyCallbackToFiles($fileExt, $dir, $callback) {
+        foreach (glob($dir . '/*.'. $fileExt) as $file) {
+            $callback($file);
+        }
+    
+        foreach (glob($dir . '/*', GLOB_ONLYDIR) as $subDir) {
+            self::applyCallbackToFiles($fileExt, $subDir, $callback);
+        }
+    }
 }
