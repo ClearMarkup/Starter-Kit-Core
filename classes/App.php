@@ -21,11 +21,11 @@ class App extends Core
         }
 
         // Set custom session name
-        session_name($_ENV['session_name']);
+        session_name($_ENV['SESSION_NAME']);
         session_start();
 
         // Show errors if debug is true
-        if ($_ENV['debug']) {
+        if ($_ENV['DEBUG']) {
             ini_set('display_errors', 1);
             ini_set('display_startup_errors', 1);
             error_reporting(E_ALL);
@@ -34,8 +34,8 @@ class App extends Core
         }
 
         // Set the locale into the instance of gettext
-        putenv('LC_ALL=' . $_ENV['locale']);
-        setlocale(LC_ALL, $_ENV['locale']);
+        putenv('LC_ALL=' . $_ENV['LOCALE']);
+        setlocale(LC_ALL, $_ENV['LOCALE']);
         bindtextdomain('messages', self::getProjectRoot() . 'locales');
         textdomain('messages');
         bind_textdomain_codeset('core', 'UTF-8');
