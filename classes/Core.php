@@ -28,11 +28,15 @@ class Core
     {
         self::$dbInstance = new Medoo([
             'type' => $_ENV['DB_TYPE'] ?? null,
-            'database' => $_ENV['DB_NAME'] ?? null,
-            'host' => $_ENV['DB_SERVER'] ?? null,
+            'database' => $_ENV['DB_DATABASE'] ?? null,
+            'host' => $_ENV['DB_HOST'] ?? null,
             'username' => $_ENV['DB_USERNAME'] ?? null,
             'password' => $_ENV['DB_PASSWORD'] ?? null,
-            'charset' => $_ENV['DB_CHARSET'] ?? null
+            'charset' => $_ENV['DB_CHARSET'] ?? 'utf8mb4',
+            'collation' => $_ENV['DB_COLLATION'] ?? 'utf8mb4_unicode_ci',
+            'port' => $_ENV['DB_PORT'] ?? 3306,
+            'prefix' => $_ENV['DB_PREFIX'] ?? null,
+            'logging' => $_ENV['DEBUG'] ? true : false
         ]);
         self::$authInstance = new Auth(self::$dbInstance->pdo, null, null, $_ENV['DEBUG'] ? false : true);
     }
@@ -55,11 +59,15 @@ class Core
         if (self::$dbInstance === null) {
             self::$dbInstance = new Medoo([
                 'type' => $_ENV['DB_TYPE'] ?? null,
-                'database' => $_ENV['DB_NAME'] ?? null,
-                'host' => $_ENV['DB_SERVER'] ?? null,
+                'database' => $_ENV['DB_DATABASE'] ?? null,
+                'host' => $_ENV['DB_HOST'] ?? null,
                 'username' => $_ENV['DB_USERNAME'] ?? null,
                 'password' => $_ENV['DB_PASSWORD'] ?? null,
-                'charset' => $_ENV['DB_CHARSET'] ?? null
+                'charset' => $_ENV['DB_CHARSET'] ?? null,
+                'collation' => $_ENV['DB_COLLATION'] ?? null,
+                'port' => $_ENV['DB_PORT'] ?? null,
+                'prefix' => $_ENV['DB_PREFIX'] ?? null,
+                'logging' => $_ENV['DEBUG'] ? true : false
             ]);
         }
         return self::$dbInstance;
