@@ -30,10 +30,14 @@ class Core
         $dotenv = Dotenv::createImmutable(self::getProjectRoot());
         $dotenv->load();
 
+        // Set custom session name
+        session_name($_ENV['SESSION_NAME']);
+        session_start();
+
         self::$dbInstance = new Medoo([
-            'database_type' => $_ENV['DB_TYPE'] ?? null,
-            'database_name' => $_ENV['DB_NAME'] ?? null,
-            'server' => $_ENV['DB_SERVER'] ?? null,
+            'type' => $_ENV['DB_TYPE'] ?? null,
+            'database' => $_ENV['DB_NAME'] ?? null,
+            'host' => $_ENV['DB_SERVER'] ?? null,
             'username' => $_ENV['DB_USERNAME'] ?? null,
             'password' => $_ENV['DB_PASSWORD'] ?? null,
             'charset' => $_ENV['DB_CHARSET'] ?? null
@@ -58,9 +62,9 @@ class Core
     {
         if (self::$dbInstance === null) {
             self::$dbInstance = new Medoo([
-                'database_type' => $_ENV['DB_TYPE'] ?? null,
-                'database_name' => $_ENV['DB_NAME'] ?? null,
-                'server' => $_ENV['DB_SERVER'] ?? null,
+                'type' => $_ENV['DB_TYPE'] ?? null,
+                'database' => $_ENV['DB_NAME'] ?? null,
+                'host' => $_ENV['DB_SERVER'] ?? null,
                 'username' => $_ENV['DB_USERNAME'] ?? null,
                 'password' => $_ENV['DB_PASSWORD'] ?? null,
                 'charset' => $_ENV['DB_CHARSET'] ?? null
