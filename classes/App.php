@@ -4,6 +4,7 @@ namespace ClearMarkup\Classes;
 
 use ClearMarkup\Classes\Core;
 use ClearMarkup\Classes\View;
+use AltoRouter;
 
 class App extends Core
 {

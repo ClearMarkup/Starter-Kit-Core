@@ -25,7 +25,7 @@ class View extends Core
         global $match;
 
         $this->assign('site', [
-            'name' => $_ENV['SITE_NAME'],
+            'name' => $_ENV['SITENAME'],
             'language' => explode('_', $_ENV['LOCALE'])[0],
             'url' => $_ENV['SITE_URL'],
             'version' => $_ENV['VERSION'],
