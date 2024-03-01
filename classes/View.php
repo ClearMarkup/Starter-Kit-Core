@@ -140,10 +140,9 @@ class View extends Core
      */
     public function render($view, $status = 200)
     {
-        global $config;
         extract($this->data);
 
-        require($config->root . 'views/' . $view . '.view.php');
+        require(self::$projectRoot . 'views/' . $view . '.view.php');
         http_response_code($status);
         exit;
     }

@@ -16,6 +16,8 @@ class Core
 {
     protected static $dbInstance;
     protected static $authInstance;
+    protected static $projectRoot;
+
 
     /**
      * Core constructor.
@@ -27,6 +29,14 @@ class Core
         global $config;
         self::$dbInstance = new Medoo($config->database);
         self::$authInstance = new Auth(self::$dbInstance->pdo, null, null, $config->debug ? false : true);
+    }
+
+    public static function getProjectRoot()
+    {
+        if (self::$projectRoot === null) {
+            self::$projectRoot = getcwd();
+        }
+        return self::$projectRoot . '/';
     }
 
     /**
@@ -150,6 +160,14 @@ class Core
         }
     }
 
+    /**
+     * Apply a callback to all files with a certain extension in a directory and its subdirectories.
+     * 
+     * @param string $fileExt The file extension to apply the callback to.
+     * @param string $dir The directory to search for files in.
+     * @param callable $callback The callback to apply to the files.
+     * @return void
+     */
     static function applyCallbackToFiles($fileExt, $dir, $callback) {
         foreach (glob($dir . '/*.'. $fileExt) as $file) {
             $callback($file);
