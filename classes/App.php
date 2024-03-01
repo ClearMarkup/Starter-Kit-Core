@@ -20,13 +20,6 @@ class App extends Core
             exit(0);
         }
 
-        // Config
-        if (!file_exists(self::getProjectRoot() . 'config.php')) {
-            die('Please run <code>php cm init</code> to create the config file.');
-        } else {
-            require_once(self::getProjectRoot() . 'config.php');
-        }
-
         // Set custom session name
         session_name($config->session_name);
         session_start();

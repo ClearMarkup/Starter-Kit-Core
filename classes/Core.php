@@ -16,7 +16,7 @@ class Core
 {
     protected static $dbInstance;
     protected static $authInstance;
-    protected static $projectRoot;
+    private static $projectRoot;
 
 
     /**
@@ -26,7 +26,12 @@ class Core
      */
     public function __construct()
     {
-        global $config;
+        // Config
+        if (!file_exists(self::getProjectRoot() . 'config.php')) {
+            die('Please run <code>php cm init</code> to create the config file.');
+        } else {
+            require_once(self::getProjectRoot() . 'config.php');
+        }
         self::$dbInstance = new Medoo($config->database);
         self::$authInstance = new Auth(self::$dbInstance->pdo, null, null, $config->debug ? false : true);
     }
