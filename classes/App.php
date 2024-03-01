@@ -50,7 +50,7 @@ class App extends Core
         // Router
         $router = new AltoRouter();
 
-        self::applyCallbackToFiles('php', __DIR__ . '/routes', function ($file) use ($config, $router) {
+        self::applyCallbackToFiles('php', self::getProjectRoot() . 'routes', function ($file) use ($config, $router) {
             require_once($file);
         });
 
