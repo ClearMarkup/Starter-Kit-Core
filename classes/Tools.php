@@ -103,26 +103,22 @@ class Tools extends Core{
      */
     static function sendEmail($to, $subject, $content, $holders = [])
     {
-        global $config;
-    
         $mail = new PHPMailer(true);
         $mail->CharSet = "UTF-8";
     
-        if ($config->smtp) {
-            $mail->isSMTP();
-            $mail->Host       = $config->smtp['host'];
-            $mail->SMTPAuth   = $config->smtp['SMTPAuth'];
-            $mail->Username   = $config->smtp['username'];
-            $mail->Password   = $config->smtp['password'];
-            $mail->SMTPSecure = $config->smtp['SMTPSecure'];
-            $mail->Port       = $config->smtp['port'];
-        }
+        $mail->isSMTP();
+        $mail->Host       = $_ENV['SMTP_HOST'];
+        $mail->SMTPAuth   = $_ENV['SMTP_AUTH'];
+        $mail->Username   = $_ENV['SMTP_USERNAME'];
+        $mail->Password   = $_ENV['SMTP_PASSWORD'];
+        $mail->SMTPSecure = $_ENV['SMTP_SECURE'];
+        $mail->Port       = $_ENV['SMTP_PORT'];
     
         foreach ($holders as $key => $value) {
             $content = str_replace('{{' . $key . '}}', $value, $content);
         }
     
-        $mail->setFrom($config->mail_from, $config->mail_from_text);
+        $mail->setFrom($_ENV['MAIL_FROM'], $_ENV['MAIL_FROM_TEXT']);
         $mail->addAddress($to);
         $mail->isHTML(true);
         $mail->Subject = $subject;

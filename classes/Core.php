@@ -4,6 +4,7 @@ namespace ClearMarkup\Classes;
 
 use Medoo\Medoo;
 use Delight\Auth\Auth;
+use Dotenv\Dotenv;
 
 /**
  * Class Core
@@ -26,14 +27,18 @@ class Core
      */
     public function __construct()
     {
-        // Config
-        if (!file_exists(self::getProjectRoot() . 'config.php')) {
-            die('Please run <code>php cm init</code> to create the config file.');
-        } else {
-            require_once(self::getProjectRoot() . 'config.php');
-        }
-        self::$dbInstance = new Medoo($config->database);
-        self::$authInstance = new Auth(self::$dbInstance->pdo, null, null, $config->debug ? false : true);
+        $dotenv = Dotenv::createImmutable(self::getProjectRoot());
+        $dotenv->load();
+
+        self::$dbInstance = new Medoo([
+            'database_type' => $_ENV['DB_TYPE'],
+            'database_name' => $_ENV['DB_NAME'],
+            'server' => $_ENV['DB_SERVER'],
+            'username' => $_ENV['DB_USERNAME'],
+            'password' => $_ENV['DB_PASSWORD'],
+            'charset' => $_ENV['DB_CHARSET']
+        ]);
+        self::$authInstance = new Auth(self::$dbInstance->pdo, null, null, $_ENV['debug'] ? false : true);
     }
 
     public static function getProjectRoot()
@@ -51,9 +56,15 @@ class Core
      */
     public static function getDbInstance()
     {
-        global $config;
         if (self::$dbInstance === null) {
-            self::$dbInstance = new Medoo($config->database);
+            self::$dbInstance = new Medoo([
+                'database_type' => $_ENV['DB_TYPE'],
+                'database_name' => $_ENV['DB_NAME'],
+                'server' => $_ENV['DB_SERVER'],
+                'username' => $_ENV['DB_USERNAME'],
+                'password' => $_ENV['DB_PASSWORD'],
+                'charset' => $_ENV['DB_CHARSET']
+            ]);
         }
         return self::$dbInstance;
     }
@@ -66,9 +77,8 @@ class Core
     public static function getAuthInstance()
     {
         self::getDbInstance();
-        global $config;
         if (self::$authInstance === null) {
-            self::$authInstance = new Auth(self::$dbInstance->pdo, null, null, $config->debug ? false : true);
+            self::$authInstance = new Auth(self::$dbInstance->pdo, null, null, $_ENV['debug'] ? false : true);
         }
         return self::$authInstance;
     }
@@ -173,11 +183,12 @@ class Core
      * @param callable $callback The callback to apply to the files.
      * @return void
      */
-    static function applyCallbackToFiles($fileExt, $dir, $callback) {
-        foreach (glob($dir . '/*.'. $fileExt) as $file) {
+    static function applyCallbackToFiles($fileExt, $dir, $callback)
+    {
+        foreach (glob($dir . '/*.' . $fileExt) as $file) {
             $callback($file);
         }
-    
+
         foreach (glob($dir . '/*', GLOB_ONLYDIR) as $subDir) {
             self::applyCallbackToFiles($fileExt, $subDir, $callback);
         }

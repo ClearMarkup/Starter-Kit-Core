@@ -21,11 +21,11 @@ class App extends Core
         }
 
         // Set custom session name
-        session_name($config->session_name);
+        session_name($_ENV['session_name']);
         session_start();
 
         // Show errors if debug is true
-        if ($config->debug) {
+        if ($_ENV['debug']) {
             ini_set('display_errors', 1);
             ini_set('display_startup_errors', 1);
             error_reporting(E_ALL);
@@ -34,8 +34,8 @@ class App extends Core
         }
 
         // Set the locale into the instance of gettext
-        putenv('LC_ALL=' . $config->locale);
-        setlocale(LC_ALL, $config->locale);
+        putenv('LC_ALL=' . $_ENV['locale']);
+        setlocale(LC_ALL, $_ENV['locale']);
         bindtextdomain('messages', self::getProjectRoot() . 'locales');
         textdomain('messages');
         bind_textdomain_codeset('core', 'UTF-8');
@@ -43,7 +43,7 @@ class App extends Core
         // Router
         $router = new AltoRouter();
 
-        self::applyCallbackToFiles('php', self::getProjectRoot() . 'routes', function ($file) use ($config, $router) {
+        self::applyCallbackToFiles('php', self::getProjectRoot() . 'routes', function ($file) use ($router) {
             require_once($file);
         });
 

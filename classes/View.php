@@ -22,13 +22,13 @@ class View extends Core
      */
     public function __construct()
     {
-        global $config, $match;
+        global $match;
 
         $this->assign('site', [
-            'name' => $config->sitename,
-            'language' => explode('_', $config->locale)[0],
-            'url' => $config->url,
-            'version' => $config->version,
+            'name' => $_ENV['SITE_NAME'],
+            'language' => explode('_', $_ENV['LOCALE'])[0],
+            'url' => $_ENV['SITE_URL'],
+            'version' => $_ENV['VERSION'],
         ]);
 
         $db = new Db;
@@ -142,7 +142,7 @@ class View extends Core
     {
         extract($this->data);
 
-        require(self::$projectRoot . 'views/' . $view . '.view.php');
+        require(self::getProjectRoot() . 'views/' . $view . '.view.php');
         http_response_code($status);
         exit;
     }
