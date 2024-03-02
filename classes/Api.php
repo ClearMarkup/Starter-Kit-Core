@@ -65,11 +65,11 @@ class Api extends Core
     public function auth($status = true)
     {
         if ($status) {
-            if (!self::$authInstance->isLoggedIn()) {
+            if (!self::getAuthInstance()->isLoggedIn()) {
                 $this->error('You are not logged in.');
             }
         } else {
-            if (self::$authInstance->isLoggedIn()) {
+            if (self::getAuthInstance()->isLoggedIn()) {
                 $this->error('You are already logged in.');
             }
         }
@@ -89,7 +89,7 @@ class Api extends Core
     {
         switch ($status) {
             case 'normal':
-                if (!self::$authInstance->isNormal()) {
+                if (!self::getAuthInstance()->isNormal()) {
                     $this->error('You are not authorized to access this resource.');
                 }
                 break;
@@ -108,7 +108,7 @@ class Api extends Core
      */
     public function hasRole($role)
     {
-        if (!self::$authInstance->hasRole($role)) {
+        if (!self::getAuthInstance()->hasRole($role)) {
             $this->error('You are not authorized to access this resource.');
         }
         return $this;

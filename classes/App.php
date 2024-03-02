@@ -6,6 +6,7 @@ use ClearMarkup\Classes\Core;
 use ClearMarkup\Classes\View;
 use AltoRouter;
 use Dotenv\Dotenv;
+use Dotenv\Exception\InvalidPathException;
 
 
 class App extends Core
@@ -17,8 +18,14 @@ class App extends Core
      */
     public function __construct()
     {
-        $dotenv = Dotenv::createImmutable(self::getProjectRoot());
-        $dotenv->load();
+        try {
+            $dotenv = Dotenv::createImmutable(self::getProjectRoot());
+            $dotenv->load();
+        } catch (InvalidPathException $e) {
+            die('Please run <code>php cm init</code> to create the .env file.');
+            exit;
+        }
+
 
         session_name($_ENV['SESSION_NAME']);
         session_start();

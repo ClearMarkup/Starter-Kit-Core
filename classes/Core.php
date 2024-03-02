@@ -14,8 +14,8 @@ use Delight\Auth\Auth;
  */
 class Core
 {
-    protected static $dbInstance;
-    protected static $authInstance;
+    private $dbInstance;
+    private $authInstance;
     private static $projectRoot;
 
 
@@ -26,19 +26,7 @@ class Core
      */
     public function __construct()
     {
-        self::$dbInstance = new Medoo([
-            'type' => $_ENV['DB_TYPE'] ?? null,
-            'database' => $_ENV['DB_DATABASE'] ?? null,
-            'host' => $_ENV['DB_HOST'] ?? null,
-            'username' => $_ENV['DB_USERNAME'] ?? null,
-            'password' => $_ENV['DB_PASSWORD'] ?? null,
-            'charset' => $_ENV['DB_CHARSET'] ?? 'utf8mb4',
-            'collation' => $_ENV['DB_COLLATION'] ?? 'utf8mb4_unicode_ci',
-            'port' => $_ENV['DB_PORT'] ?? 3306,
-            'prefix' => $_ENV['DB_PREFIX'] ?? null,
-            'logging' => $_ENV['DEBUG'] ? true : false
-        ]);
-        self::$authInstance = new Auth(self::$dbInstance->pdo, null, null, $_ENV['DEBUG'] ? false : true);
+
     }
 
     public static function getProjectRoot()
@@ -80,9 +68,8 @@ class Core
      */
     public static function getAuthInstance()
     {
-        self::getDbInstance();
         if (self::$authInstance === null) {
-            self::$authInstance = new Auth(self::$dbInstance->pdo, null, null, $_ENV['debug'] ? false : true);
+            self::$authInstance = new Auth(self::getDbInstance()->pdo, null, null, $_ENV['debug'] ? false : true);
         }
         return self::$authInstance;
     }
@@ -147,7 +134,7 @@ class Core
         $db = new Db();
 
         $db->table('users_logs')->insert([
-            'user_id' => self::$authInstance->getUserId() ?? null,
+            'user_id' => self::getAuthInstance()->getUserId() ?? null,
             'action' => $action,
             'data' => json_encode($data),
             'created_at' => time()
@@ -166,8 +153,8 @@ class Core
     {
         $time = strtotime($time) - time();
 
-        $log = self::$dbInstance->count('users_logs', [
-            'user_id' => self::$authInstance->getUserId(),
+        $log = self::getDbInstance()->count('users_logs', [
+            'user_id' => self::getAuthInstance()->getUserId(),
             'action' => $action,
             'created_at[>]' => time() - $time
         ]);

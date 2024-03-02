@@ -32,8 +32,8 @@ class View extends Core
         ]);
 
         $db = new Db;
-        if (self::$authInstance->isLoggedIn()) {
-            $user = $db->table('users')->filter('id', self::$authInstance->getUserId())->get([
+        if (self::getAuthInstance()->isLoggedIn()) {
+            $user = $db->table('users')->filter('id', self::getAuthInstance()->getUserId())->get([
                 'id',
                 'email',
                 'username',
@@ -41,7 +41,7 @@ class View extends Core
             ]);
 
             $user['needsEmailConfirmation'] = $db->table('users_confirmations')->filter([
-                'user_id' => self::$authInstance->getUserId(),
+                'user_id' => self::getAuthInstance()->getUserId(),
                 'expires[>]' => time()
             ])->has();
         } else {
@@ -82,12 +82,12 @@ class View extends Core
     public function auth($status = true)
     {
         if ($status) {
-            if (!self::$authInstance->isLoggedIn()) {
+            if (!self::getAuthInstance()->isLoggedIn()) {
                 header('Location: /login');
                 exit;
             }
         } else {
-            if (self::$authInstance->isLoggedIn()) {
+            if (self::getAuthInstance()->isLoggedIn()) {
                 header('Location: /');
                 exit;
             }
@@ -105,7 +105,7 @@ class View extends Core
     {
         switch ($status) {
             case 'normal':
-                if (!self::$authInstance->isNormal()) {
+                if (!self::getAuthInstance()->isNormal()) {
                     http_response_code(403);
                     header('Location: /login');
                     exit;
@@ -123,7 +123,7 @@ class View extends Core
      */
     public function hasRole($role)
     {
-        if (!self::$authInstance->hasRole($role)) {
+        if (!self::getAuthInstance()->hasRole($role)) {
             http_response_code(403);
             header('Location: /login');
             exit;
