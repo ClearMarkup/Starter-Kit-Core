@@ -200,7 +200,7 @@ class Db extends Core
                             $data[$key][$column] = $operation($columnValue);
                         } elseif (is_string($operation)) {
                             $operations = explode('|', $operation);
-                            $data[$key][$column] = self::applyOperations($columnValue, $operations);
+                            $data[$key][$column] = Tools::applyOperations($columnValue, $operations);
                         }
                     }
                 }
@@ -249,7 +249,7 @@ class Db extends Core
                         $data[$column] = $operation($columnValue);
                     } elseif (is_string($operation)) {
                         $operations = explode('|', $operation);
-                        $data[$column] = self::applyOperations($columnValue, $operations);
+                        $data[$column] = Tools::applyOperations($columnValue, $operations);
                     }
                 }
             }

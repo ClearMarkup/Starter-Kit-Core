@@ -8,13 +8,15 @@ use AltoRouter;
 use Dotenv\Dotenv;
 use Dotenv\Exception\InvalidPathException;
 
-
+/**
+ * This class represents the core functionality of the application.
+ */
 class App extends Core
 {
     /**
      * App constructor.
      * 
-     * Initializes the database and authentication instances.
+     * Initializes the application by loading the environment variables, starting the session, and routing the request.
      */
     public function __construct()
     {
@@ -57,7 +59,7 @@ class App extends Core
         // Router
         $router = new AltoRouter();
 
-        self::applyCallbackToFiles('php', self::getProjectRoot() . 'routes', function ($file) use ($router) {
+        Tools::applyCallbackToFiles('php', self::getProjectRoot() . 'routes', function ($file) use ($router) {
             require_once($file);
         });
 
