@@ -55,7 +55,7 @@ class Core
                 'collation' => $_ENV['DB_COLLATION'] ?? null,
                 'port' => $_ENV['DB_PORT'] ?? null,
                 'prefix' => $_ENV['DB_PREFIX'] ?? null,
-                'logging' => $_ENV['DEBUG'] ? true : false
+                'logging' => $_ENV['DEBUG'] === "true" ? true : false
             ]);
         }
         return self::$dbInstance;
@@ -69,7 +69,7 @@ class Core
     public static function getAuthInstance()
     {
         if (self::$authInstance === null) {
-            self::$authInstance = new Auth(self::getDbInstance()->pdo, null, null, $_ENV['DEBUG'] ? false : true);
+            self::$authInstance = new Auth(self::getDbInstance()->pdo, null, null, $_ENV['DEBUG'] === "true" ? false : true);
         }
         return self::$authInstance;
     }
