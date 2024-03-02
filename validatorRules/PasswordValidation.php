@@ -10,11 +10,11 @@ class PasswordValidation extends \Rakit\Validation\Rule
     public function check($value): bool
     {
 
-        $lengthRequirement = $_ENV['PASSWORD_POLICY_LENGTH'];
-        $uppercaseRequirement = $_ENV['PASSWORD_POLICY_UPPERCASE'];
-        $lowercaseRequirement = $_ENV['PASSWORD_POLICY_LOWERCASE'];
-        $digitRequirement = $_ENV['PASSWORD_POLICY_DIGIT'];
-        $specialRequirement = $_ENV['PASSWORD_POLICY_SPECIAL'];
+        $lengthRequirement = intval($_ENV['PASSWORD_POLICY_LENGTH']);
+        $uppercaseRequirement = intval($_ENV['PASSWORD_POLICY_UPPERCASE']);
+        $lowercaseRequirement = intval($_ENV['PASSWORD_POLICY_LOWERCASE']);
+        $digitRequirement = intval($_ENV['PASSWORD_POLICY_DIGIT']);
+        $specialRequirement = intval($_ENV['PASSWORD_POLICY_SPECIAL']);
 
         $errors = [];
 

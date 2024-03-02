@@ -112,7 +112,7 @@ class Tools extends Core{
         $mail->Username   = $_ENV['SMTP_USERNAME'];
         $mail->Password   = $_ENV['SMTP_PASSWORD'];
         $mail->SMTPSecure = $_ENV['SMTP_SECURE'];
-        $mail->Port       = $_ENV['SMTP_PORT'];
+        $mail->Port       = intval($_ENV['SMTP_PORT']);
     
         foreach ($holders as $key => $value) {
             $content = str_replace('{{' . $key . '}}', $value, $content);

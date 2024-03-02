@@ -53,7 +53,7 @@ class Core
                 'password' => $_ENV['DB_PASSWORD'] ?? null,
                 'charset' => $_ENV['DB_CHARSET'] ?? null,
                 'collation' => $_ENV['DB_COLLATION'] ?? null,
-                'port' => $_ENV['DB_PORT'] ?? null,
+                'port' => intval($_ENV['DB_PORT'] ?? 3306),
                 'prefix' => $_ENV['DB_PREFIX'] ?? null,
                 'logging' => $_ENV['DEBUG'] === "true" ? true : false
             ]);
